@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="account" class="com.kenny.common.PersonalAccount">   <!-- 인터페이스를 직접 등록할 수 없어 인터페이스를 상속받는 PersonalAccount를 작성-->
+        <constructor-arg index="0" value="20"/>
+        <constructor-arg index="1" value="110-234-567890"/>
+    </bean>
+    <!-- 멤버가 계좌를 가진다 = 의존성을 가지고 있다.
+    따라서 iod 컨테이너가 의존성을 주입할 수 있도록 한다. -->
+    <!-- 1. 생성자 주입 -->
+    <bean id="member" class="com.kenny.common.MemberDTO">   <!--@AllArgsConstructor 모든 내용 전달-->
+        <constructor-arg name="sequence" value="1"/>
+        <constructor-arg name="name" value="홍길동"/>
+        <constructor-arg name="phone" value="010-1234-5678"/>
+        <constructor-arg name="email" value="hong@gmail.com"/>
+        <constructor-arg name="personalAccount" ref="account"/>   <!-- personalAccount는 Account 타입임. 위에 등록된 bean을 넘겨주어야 함.-->
+        <!-- 생성된 다른 bean을 의존성 주입할 경우 value 속성이 아닌 ref 속성을 사용하여 bean id를 전달 -->
+    </bean>
+
+<!--    1. 생성자 주입 - ioc 컨테이너에게 아래와 같이 넘기면서 의존성 주입한 것과 같다.-->
+<!--        new MemberDTO(1, "", "", "", "")-->
+<!--    2. SETTER 주입 - ioc 컨테이너에게 아래와 같이 넘기면서 의존성 주입한 것과 같다.-->
+<!--        MemberDTO member = new MemberDTO();-->
+<!--        member.setPersonalAccount(account);-->
+
+    <!-- 2. setter 주입 -->
+<!--    <bean id="member" class="com.kenny.common.MemberDTO">   &lt;!&ndash;@AllArgsConstructor 모든 내용 전달&ndash;&gt;-->
+<!--        <property name="sequence" value="1"/>-->
+<!--        <property name="name" value="홍길동"/>-->
+<!--        <property name="phone" value="010-1234-5678"/>-->
+<!--        <property name="email" value="hong@gmail.com"/>-->
+<!--        <property name="personalAccount" ref="account"/>   &lt;!&ndash; personalAccount는 Account 타입임. 위에 등록된 bean을 넘겨주어야 함.&ndash;&gt;-->
+<!--    </bean>-->
+
+</beans>
+
+<!-- member는 Account 타입을 의존함. 그에 대한 객체를 ioc 컨테이너를 생성해서(생성자를 호출할 때) 의존성을 주입한다. -->
