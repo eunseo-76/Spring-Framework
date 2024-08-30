@@ -2,6 +2,7 @@ package com.kenny.section01.aop;
 
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 
@@ -65,6 +66,25 @@ public class LoggingAspect {
     }
     // 예외 발생 시 어떤 타입의 exception이 발생했는지 가져와 처리가 가능하다.
     // 조인 포인트 + 예외 타입
+
+    // Around : 핵심 기능 시작과 끝을 감싸고 동작
+    @Around("logPointcut()")
+    public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
+
+        System.out.println("around before : " + joinPoint.getSignature());
+
+        Object result = joinPoint.proceed();    // 원본 조인 포인트를 실행
+        // proceedingjoinpoint 를 실행하는 동작
+
+        System.out.println("around after : " + joinPoint.getSignature());
+
+        return result;
+    }
+    // 이 메소드가 실행되면 전처리, target object, 후처리가 모두 실행된다.
+
+     // 실제 실행해야하는 target object의 동작에 전처리, 후처리를 모두 할 수 있다.
+    // 전처리르 한 후 target object의 기능을 실행하라는 호출이 필요하다.
+    // target object를 호출하고 받은 값으로 후처리를 한다(?)
 }
 
 
