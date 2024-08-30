@@ -70,14 +70,13 @@ public class Application {
 
         // 클래스 메타 정보를 이용해 메소드 정보에 접근해보자.
         Method[] methods = Account.class.getMethods();
-        Method getBalanceMethod = null; // Method 타입 변수 선언
-        for (Method method : methods) {
+        Method getBalanceMethod = null;
+        for(Method method : methods) {
             System.out.print(Modifier.toString(method.getModifiers()) + " ");
             System.out.print(method.getReturnType().getSimpleName() + " ");
-            System.out.print(method.getName());
+            System.out.println(method.getName());
 
-            if("getBalanceMethod".equals(method.getName())) getBalanceMethod = method;
-            // 특정 Method 참조
+            if("getBalance".equals(method.getName())) getBalanceMethod = method;
         }
 
         try {
